@@ -1,6 +1,7 @@
 <?php
 /**
  * Options Page View.
+ *
  * @package WordPress_GitHub_Sync
  */
 

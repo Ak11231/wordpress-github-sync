@@ -215,7 +215,7 @@ class WordPress_GitHub_Sync_Export {
 
 		while ( is_wp_error( $master ) && $attempts < 5 ) {
 			$master = $this->app->api()->fetch()->master();
-			$attempts ++;
+			++$attempts;
 		}
 
 		if ( is_wp_error( $master ) ) {

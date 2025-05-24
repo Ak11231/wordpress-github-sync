@@ -91,7 +91,11 @@ install_test_suite() {
 		sed $ioption "s/youremptytestdbnamehere/$DB_NAME/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/yourusernamehere/$DB_USER/" "$WP_TESTS_DIR"/wp-tests-config.php
 		sed $ioption "s/yourpasswordhere/$DB_PASS/" "$WP_TESTS_DIR"/wp-tests-config.php
-		sed $ioption "s|localhost|${DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
+		local FINAL_DB_HOST=$DB_HOST
+		if [ "$FINAL_DB_HOST" = "localhost" ]; then
+			FINAL_DB_HOST="127.0.0.1"
+		fi
+		sed $ioption "s|localhost|${FINAL_DB_HOST}|" "$WP_TESTS_DIR"/wp-tests-config.php
 	fi
 
 }
@@ -109,12 +113,17 @@ install_db() {
 	local EXTRA=""
 
 	if ! [ -z $DB_HOSTNAME ] ; then
+		local MYSQL_HOST_PARAM=$DB_HOSTNAME
+		if [ "$DB_HOSTNAME" = "localhost" ]; then
+			MYSQL_HOST_PARAM="127.0.0.1"
+		fi
+
 		if [ $(echo $DB_SOCK_OR_PORT | grep -e '^[0-9]\{1,\}$') ]; then
-			EXTRA=" --host=$DB_HOSTNAME --port=$DB_SOCK_OR_PORT --protocol=tcp"
+			EXTRA=" --host=$MYSQL_HOST_PARAM --port=$DB_SOCK_OR_PORT --protocol=tcp"
 		elif ! [ -z $DB_SOCK_OR_PORT ] ; then
 			EXTRA=" --socket=$DB_SOCK_OR_PORT"
-		elif ! [ -z $DB_HOSTNAME ] ; then
-			EXTRA=" --host=$DB_HOSTNAME --protocol=tcp"
+		elif ! [ -z $DB_HOSTNAME ] ; then # Should use MYSQL_HOST_PARAM here too
+			EXTRA=" --host=$MYSQL_HOST_PARAM --protocol=tcp"
 		fi
 	fi
 

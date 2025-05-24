@@ -1,6 +1,7 @@
 <?php
 /**
  * Locks and unlock the import/export process.
+ *
  * @package WordPress_GitHub_Sync
  */
 

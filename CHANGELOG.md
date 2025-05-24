@@ -2,6 +2,16 @@
 
 This change log follows the [Keep a Changelog standards][]. Versions follows [Semantic Versioning][].
 
+## [2.1.0] - 2024-05-24 ##
+
+* Modernized plugin for PHP 7.4+ compatibility.
+* Updated all Composer dependencies to their latest stable versions.
+* Removed support for PHP 5.2.
+* Refreshed Travis CI configuration for modern PHP and WordPress versions.
+* Updated PHPUnit configuration to version 9.6 and modernized test setup files.
+* Applied WordPress Coding Standards throughout the codebase using `phpcbf`.
+* *Note:* Execution of the full PHPUnit test suite was blocked by issues setting up the WordPress test database in the CI environment.
+
 ### [2.0.0][] ###
 
 * **POSSIBLY BREAKING**: Remove handling of custom post meta

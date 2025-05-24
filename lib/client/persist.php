@@ -1,6 +1,7 @@
 <?php
 /**
  * API Persist client.
+ *
  * @package WordPress_GitHub_Sync
  */
 

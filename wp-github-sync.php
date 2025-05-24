@@ -32,12 +32,12 @@
 
 // If the functions have already been autoloaded, don't reload.
 // This fixes function duplication during unit testing.
-$path = dirname( __FILE__ ) . '/vendor/autoload_52.php';
+$path = __DIR__ . '/vendor/autoload.php';
 if ( ! function_exists( 'get_the_github_view_link' ) && file_exists( $path ) ) {
 	require_once $path;
 }
 
-add_action( 'plugins_loaded', array( new WordPress_GitHub_Sync, 'boot' ) );
+add_action( 'plugins_loaded', array( new WordPress_GitHub_Sync(), 'boot' ) );
 
 /**
  * Class WordPress_GitHub_Sync
@@ -152,7 +152,7 @@ class WordPress_GitHub_Sync {
 		self::$instance = $this;
 
 		if ( is_admin() ) {
-			$this->admin = new WordPress_GitHub_Sync_Admin;
+			$this->admin = new WordPress_GitHub_Sync_Admin();
 		}
 
 		$this->controller = new WordPress_GitHub_Sync_Controller( $this );
@@ -187,7 +187,7 @@ class WordPress_GitHub_Sync {
 	 * Init i18n files
 	 */
 	public function l10n() {
-		load_plugin_textdomain( self::$text_domain, false, plugin_basename( dirname( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( self::$text_domain, false, plugin_basename( __DIR__ ) . '/languages/' );
 	}
 
 	/**
@@ -229,11 +229,12 @@ class WordPress_GitHub_Sync {
 				<?php
 					printf(
 						__( 'To set up your site to sync with GitHub, update your <a href="%s">settings</a> and click "Export to GitHub."', 'wp-github-sync' ),
-						admin_url( 'options-general.php?page=' . static::$text_domain)
+						admin_url( 'options-general.php?page=' . static::$text_domain )
 					);
 				?>
 			</p>
-		</div><?php
+		</div>
+		<?php
 	}
 
 	/**
@@ -252,7 +253,7 @@ class WordPress_GitHub_Sync {
 	 */
 	public function cli() {
 		if ( ! $this->cli ) {
-			$this->cli = new WordPress_GitHub_Sync_CLI;
+			$this->cli = new WordPress_GitHub_Sync_CLI();
 		}
 
 		return $this->cli;
@@ -330,7 +331,7 @@ class WordPress_GitHub_Sync {
 	 */
 	public function semaphore() {
 		if ( ! $this->semaphore ) {
-			$this->semaphore = new WordPress_GitHub_Sync_Semaphore;
+			$this->semaphore = new WordPress_GitHub_Sync_Semaphore();
 		}
 
 		return $this->semaphore;
@@ -356,7 +357,7 @@ class WordPress_GitHub_Sync {
 	 */
 	public function cache() {
 		if ( ! $this->cache ) {
-			$this->cache = new WordPress_GitHub_Sync_Cache;
+			$this->cache = new WordPress_GitHub_Sync_Cache();
 		}
 
 		return $this->cache;
@@ -395,6 +396,5 @@ class WordPress_GitHub_Sync {
 	protected function start_cron( $type ) {
 		update_option( '_wpghs_' . $type . '_started', 'yes' );
 		wp_schedule_single_event( time(), 'wpghs_' . $type . '' );
-		spawn_cron();
 	}
 }

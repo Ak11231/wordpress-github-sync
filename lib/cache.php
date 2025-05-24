@@ -1,6 +1,7 @@
 <?php
 /**
  * The cache object which reads and writes the GitHub api data
+ *
  * @package WordPress_GitHub_Sync
  */
 

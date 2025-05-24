@@ -1,6 +1,7 @@
 <?php
 /**
  * Database interface.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -45,7 +46,7 @@ class WordPress_GitHub_Sync_Database {
 	 * @return WordPress_GitHub_Sync_Post[]|WP_Error
 	 */
 	public function fetch_all_supported() {
-		$args  = array(
+		$args = array(
 			'post_type'   => $this->get_whitelisted_post_types(),
 			'post_status' => $this->get_whitelisted_post_statuses(),
 			'nopaging'    => true,
@@ -105,13 +106,15 @@ class WordPress_GitHub_Sync_Database {
 	 * @return WordPress_GitHub_Sync_Post|WP_Error
 	 */
 	public function fetch_by_sha( $sha ) {
-		$query = new WP_Query( array(
-			'meta_key'       => '_sha',
-			'meta_value'     => $sha,
-			'meta_compare'   => '=',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-		) );
+		$query = new WP_Query(
+			array(
+				'meta_key'       => '_sha',
+				'meta_value'     => $sha,
+				'meta_compare'   => '=',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
 
 		$post_id = $query->get_posts();
 		$post_id = array_pop( $post_id );
@@ -153,13 +156,13 @@ class WordPress_GitHub_Sync_Database {
 		$error = false;
 
 		foreach ( $posts as $post ) {
-			$args    = apply_filters( 'wpghs_pre_import_args', $post->get_args(), $post );
-			
-			remove_filter('content_save_pre', 'wp_filter_post_kses');
+			$args = apply_filters( 'wpghs_pre_import_args', $post->get_args(), $post );
+
+			remove_filter( 'content_save_pre', 'wp_filter_post_kses' );
 			$post_id = $post->is_new() ?
 				wp_insert_post( $args, true ) :
 				wp_update_post( $args, true );
-			add_filter('content_save_pre', 'wp_filter_post_kses');
+			add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 
 			if ( is_wp_error( $post_id ) ) {
 				if ( ! $error ) {
@@ -202,13 +205,15 @@ class WordPress_GitHub_Sync_Database {
 	 * @return string|WP_Error
 	 */
 	public function delete_post_by_path( $path ) {
-		$query = new WP_Query( array(
-			'meta_key'       => '_wpghs_github_path',
-			'meta_value'     => $path,
-			'meta_compare'   => '=',
-			'posts_per_page' => 1,
-			'fields'         => 'ids',
-		) );
+		$query = new WP_Query(
+			array(
+				'meta_key'       => '_wpghs_github_path',
+				'meta_value'     => $path,
+				'meta_compare'   => '=',
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
 
 		$post_id = $query->get_posts();
 		$post_id = array_pop( $post_id );
@@ -222,12 +227,14 @@ class WordPress_GitHub_Sync_Database {
 				preg_match( '/([0-9]{4})-([0-9]{2})-([0-9]{2})-(.*)\.md/', $filename, $matches );
 				$title = $matches[4];
 
-				$query = new WP_Query( array(
-					'name'     => $title,
-					'posts_per_page' => 1,
-					'post_type' => $this->get_whitelisted_post_types(),
-					'fields'         => 'ids',
-				) );
+				$query = new WP_Query(
+					array(
+						'name'           => $title,
+						'posts_per_page' => 1,
+						'post_type'      => $this->get_whitelisted_post_types(),
+						'fields'         => 'ids',
+					)
+				);
 
 				$post_id = $query->get_posts();
 				$post_id = array_pop( $post_id );
@@ -237,12 +244,14 @@ class WordPress_GitHub_Sync_Database {
 				preg_match( '/(.*)\.md/', $filename, $matches );
 				$title = $matches[1];
 
-				$query = new WP_Query( array(
-					'name'     => $title,
-					'posts_per_page' => 1,
-					'post_type' => $this->get_whitelisted_post_types(),
-					'fields'         => 'ids',
-				) );
+				$query = new WP_Query(
+					array(
+						'name'           => $title,
+						'posts_per_page' => 1,
+						'post_type'      => $this->get_whitelisted_post_types(),
+						'fields'         => 'ids',
+					)
+				);
 
 				$post_id = $query->get_posts();
 				$post_id = array_pop( $post_id );

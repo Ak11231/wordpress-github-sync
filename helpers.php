@@ -58,7 +58,7 @@ function get_the_github_edit_url() {
  */
 function write_wpghs_link( $atts ) {
 
-	$args = shortcode_atts(
+	$args   = shortcode_atts(
 		array(
 			'type'   => 'link',
 			'target' => 'view',
@@ -92,7 +92,7 @@ function write_wpghs_link( $atts ) {
 			break;
 		}
 		default: {
-			$getter = get_the_github_view_url();
+			$getter   = get_the_github_view_url();
 			$linktext = __( 'View this post on GitHub', 'wp-github-sync' );
 			break;
 		}
@@ -114,5 +114,4 @@ function write_wpghs_link( $atts ) {
 	}
 
 	return $output;
-
 }

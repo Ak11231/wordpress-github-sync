@@ -1,6 +1,7 @@
 <?php
 /**
  * Base API client class.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -10,8 +11,8 @@
 class WordPress_GitHub_Sync_Base_Client {
 
 	const TOKEN_OPTION_KEY = 'wpghs_oauth_token';
-	const REPO_OPTION_KEY = 'wpghs_repository';
-	const HOST_OPTION_KEY = 'wpghs_host';
+	const REPO_OPTION_KEY  = 'wpghs_repository';
+	const HOST_OPTION_KEY  = 'wpghs_host';
 
 	/**
 	 * Application container.
@@ -64,7 +65,7 @@ class WordPress_GitHub_Sync_Base_Client {
 			return new WP_Error(
 				strtolower( str_replace( ' ', '_', $status ) ),
 				sprintf(
-					__( 'Method %s to endpoint %s failed with error: %s', 'wp-github-sync' ),
+					__( 'Method %1$s to endpoint %2$s failed with error: %3$s', 'wp-github-sync' ),
 					$method,
 					$endpoint,
 					$body && $body->message ? $body->message : 'Unknown error'

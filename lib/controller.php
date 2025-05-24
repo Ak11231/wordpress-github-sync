@@ -1,6 +1,7 @@
 <?php
 /**
  * Controller object manages tree retrieval, manipulation and publishing
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -35,40 +36,48 @@ class WordPress_GitHub_Sync_Controller {
 	public function pull_posts() {
 		$this->set_ajax();
 		if ( ! $this->app->semaphore()->is_open() ) {
-			return $this->app->response()->error( new WP_Error(
-				'semaphore_locked',
-				sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::pull_posts()' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'semaphore_locked',
+					sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::pull_posts()' )
+				)
+			);
 		}
 
 		if ( ! $this->app->request()->is_secret_valid() ) {
-			return $this->app->response()->error( new WP_Error(
-				'invalid_headers',
-				__( 'Failed to validate secret.', 'wp-github-sync' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'invalid_headers',
+					__( 'Failed to validate secret.', 'wp-github-sync' )
+				)
+			);
 		}
 
 		$payload = $this->app->request()->payload();
 
 		if ( $payload->has_error() ) {
-			return $this->app->response()->error( new WP_Error(
-				'invalid_payload',
-				sprintf(
-					__( "%s won't be imported. Error: %s", 'wp-github-sync' ),
-					strtolower( $payload->get_commit_id() ) ? : '[Missing Commit ID]',
-					$payload->get_error()
+			return $this->app->response()->error(
+				new WP_Error(
+					'invalid_payload',
+					sprintf(
+						__( "%1\$s won't be imported. Error: %2\$s", 'wp-github-sync' ),
+						strtolower( $payload->get_commit_id() ) ? : '[Missing Commit ID]',
+						$payload->get_error()
+					)
 				)
-			) );
+			);
 		}
 
 		if ( ! $payload->should_import() ) {
-			return $this->app->response()->error( new WP_Error(
-				'invalid_payload',
-				sprintf(
-					__( "%s won't be imported.", 'wp-github-sync' ),
-					strtolower( $payload->get_commit_id() ) ? : '[Missing Commit ID]'
+			return $this->app->response()->error(
+				new WP_Error(
+					'invalid_payload',
+					sprintf(
+						__( "%s won't be imported.", 'wp-github-sync' ),
+						strtolower( $payload->get_commit_id() ) ? : '[Missing Commit ID]'
+					)
 				)
-			) );
+			);
 		}
 
 		$this->app->semaphore()->lock();
@@ -93,10 +102,12 @@ class WordPress_GitHub_Sync_Controller {
 	 */
 	public function import_master() {
 		if ( ! $this->app->semaphore()->is_open() ) {
-			return $this->app->response()->error( new WP_Error(
-				'semaphore_locked',
-				sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::import_master()' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'semaphore_locked',
+					sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::import_master()' )
+				)
+			);
 		}
 
 		$this->app->semaphore()->lock();
@@ -125,10 +136,12 @@ class WordPress_GitHub_Sync_Controller {
 	 */
 	public function export_all() {
 		if ( ! $this->app->semaphore()->is_open() ) {
-			return $this->app->response()->error( new WP_Error(
-				'semaphore_locked',
-				sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::export_all()' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'semaphore_locked',
+					sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::export_all()' )
+				)
+			);
 		}
 
 		$this->app->semaphore()->lock();
@@ -159,10 +172,12 @@ class WordPress_GitHub_Sync_Controller {
 	 */
 	public function export_post( $post_id ) {
 		if ( ! $this->app->semaphore()->is_open() ) {
-			return $this->app->response()->error( new WP_Error(
-				'semaphore_locked',
-				sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::export_post()' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'semaphore_locked',
+					sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::export_post()' )
+				)
+			);
 		}
 
 		$this->app->semaphore()->lock();
@@ -187,10 +202,12 @@ class WordPress_GitHub_Sync_Controller {
 	 */
 	public function delete_post( $post_id ) {
 		if ( ! $this->app->semaphore()->is_open() ) {
-			return $this->app->response()->error( new WP_Error(
-				'semaphore_locked',
-				sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::delete_post()' )
-			) );
+			return $this->app->response()->error(
+				new WP_Error(
+					'semaphore_locked',
+					sprintf( __( '%s : Semaphore is locked, import/export already in progress.', 'wp-github-sync' ), 'Controller::delete_post()' )
+				)
+			);
 		}
 
 		$this->app->semaphore()->lock();

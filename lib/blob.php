@@ -1,6 +1,7 @@
 <?php
 /**
  * API Blob model.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -160,7 +161,7 @@ class WordPress_GitHub_Sync_Blob {
 	 * @return stdClass
 	 */
 	public function to_body() {
-		$data = new stdClass;
+		$data = new stdClass();
 
 		$data->mode = '100644';
 		$data->type = 'blob';

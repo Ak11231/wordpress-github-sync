@@ -1,6 +1,7 @@
 <?php
 /**
  * The post object which represents both the GitHub and WordPress post
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -18,12 +19,14 @@ class WordPress_GitHub_Sync_Post {
 
 	/**
 	 * Post ID
+	 *
 	 * @var integer
 	 */
 	public $id = 0;
 
 	/**
 	 * Post object
+	 *
 	 * @var WP_Post
 	 */
 	public $post;
@@ -105,6 +108,7 @@ class WordPress_GitHub_Sync_Post {
 
 	/**
 	 * Returns true if the post has a password
+	 *
 	 * @return bool
 	 */
 	public function has_password() {
@@ -140,7 +144,7 @@ class WordPress_GitHub_Sync_Post {
 
 		if ( function_exists( 'wpmarkdown_html_to_markdown' ) ) {
 			$content = wpmarkdown_html_to_markdown( $content );
-		} else if ( class_exists( 'WPCom_Markdown' ) ) {
+		} elseif ( class_exists( 'WPCom_Markdown' ) ) {
 			if ( WPCom_Markdown::get_instance()->is_markdown( $this->post->ID ) ) {
 				$content = $this->post->post_content_filtered;
 			}
@@ -270,7 +274,10 @@ class WordPress_GitHub_Sync_Post {
 			$user = get_userdata( $last_id );
 
 			if ( $user ) {
-				return array( 'name' => $user->display_name, 'email' => $user->user_email );
+				return array(
+					'name'  => $user->display_name,
+					'email' => $user->user_email,
+				);
 			}
 		}
 
@@ -396,7 +403,7 @@ class WordPress_GitHub_Sync_Post {
 	 * @return WordPress_GitHub_Sync_Blob
 	 */
 	public function to_blob() {
-		$data = new stdClass;
+		$data = new stdClass();
 
 		$data->path    = $this->github_path();
 		$data->content = $this->github_content();

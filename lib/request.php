@@ -1,6 +1,7 @@
 <?php
 /**
  * Request management object.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -73,6 +74,7 @@ class WordPress_GitHub_Sync_Request {
 		}
 		/**
 		 * Nginx and pre 5.4 workaround.
+		 *
 		 * @see http://www.php.net/manual/en/function.getallheaders.php
 		 */
 		$headers = array();

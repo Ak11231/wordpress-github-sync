@@ -1,6 +1,7 @@
 <?php
 /**
  * Git commit tree.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -182,7 +183,7 @@ class WordPress_GitHub_Sync_Tree {
 			unset( $this->shas[ $post->sha() ] );
 
 			$this->changed = true;
-		} else if ( isset( $this->paths[ $post->github_path() ] ) ) {
+		} elseif ( isset( $this->paths[ $post->github_path() ] ) ) {
 			unset( $this->paths[ $post->github_path() ] );
 
 			$this->changed = true;

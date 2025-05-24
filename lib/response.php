@@ -1,6 +1,7 @@
 <?php
 /**
  * Response management object.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -48,7 +49,10 @@ class WordPress_GitHub_Sync_Response {
 
 				foreach ( $error->errors as $code => $messages ) {
 					foreach ( $messages as $message ) {
-						$result[] = array( 'code' => $code, 'message' => $message );
+						$result[] = array(
+							'code'    => $code,
+							'message' => $message,
+						);
 					}
 				}
 

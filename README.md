@@ -7,6 +7,10 @@
 **License:** GPLv2  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
+## Requirements ##
+
+Requires PHP 7.4 or higher.
+
 ## Description ##
 
 *A WordPress plugin to sync content with a GitHub repository (or Jekyll site)*
@@ -195,6 +199,8 @@ There are a number of other customizations available in WordPress <--> GitHub Sy
 Found a bug? Want to take a stab at [one of the open issues](https://github.com/mAAdhaTTah/wordpress-github-sync/issues)? We'd love your help!
 
 See [the contributing documentation](CONTRIBUTING.md) for details.
+
+**Development Note:** Project dependencies and build tools have been modernized for compatibility with current PHP and WordPress versions.
 
 ### Prior Art ###
 

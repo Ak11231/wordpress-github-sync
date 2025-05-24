@@ -1,6 +1,7 @@
 <?php
 /**
  * Fetch API client class.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -140,7 +141,7 @@ class WordPress_GitHub_Sync_Fetch_Client extends WordPress_GitHub_Sync_Base_Clie
 		}
 
 		$data->path = $blob->path;
-		$obj = new WordPress_GitHub_Sync_Blob( $data );
+		$obj        = new WordPress_GitHub_Sync_Blob( $data );
 
 		return $this->app->cache()->set_blob( $obj->sha(), $obj );
 	}

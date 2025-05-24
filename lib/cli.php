@@ -1,6 +1,7 @@
 <?php
 /**
  * WP_CLI Commands
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -140,7 +141,7 @@ class WordPress_GitHub_Sync_CLI extends WP_CLI_Command {
 					)
 				);
 			}
-		} else if ( isset( $assoc_args['sha'] ) ) {
+		} elseif ( isset( $assoc_args['sha'] ) ) {
 			WP_CLI::line( 'Starting sha import.' );
 
 			$commit = $this->app->api()->fetch()->commit( $assoc_args['sha'] );

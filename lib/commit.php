@@ -1,6 +1,7 @@
 <?php
 /**
  * API commit model.
+ *
  * @package WordPress_GitHub_Sync
  */
 
@@ -248,7 +249,7 @@ class WordPress_GitHub_Sync_Commit {
 	 */
 	public function to_body() {
 		$body = array(
-			'tree' => $this->tree_sha(),
+			'tree'    => $this->tree_sha(),
 			'message' => $this->message(),
 			'parents' => $this->parents(),
 		);
