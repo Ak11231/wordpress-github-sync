@@ -28,14 +28,13 @@
     "classmap": ["tests/"]
   },
   "require": {
-    "php": ">=5.2",
-    "mustangostang/spyc": "^0.6.1",
-    "xrstf/composer-php52": "~1.0"
+    "php": ">=7.4",
+    "mustangostang/spyc": "^0.6.1"
   },
   "require-dev": {
     "jdgrimes/wp-http-testcase": "1.3.1",
     "mockery/mockery": "0.9.3",
-    "phpunit/phpunit": "^4.8",
+    "phpunit/phpunit": "^9.5",
     "websharks/wp-i18n-tools": "dev-master",
     "wp-coding-standards/wpcs": "0.7.1",
     "squizlabs/php_codesniffer": "~2.3"
@@ -44,15 +43,6 @@
     "sniff": "phpcs --runtime-set installed_paths vendor/wp-coding-standards/wpcs -p ./ --standard=WordPress --report=full --extensions=php --ignore=*/tests/*,*/vendor/*",
     "clean": "phpcbf --runtime-set installed_paths vendor/wp-coding-standards/wpcs -p ./ --standard=WordPress --report=full --extensions=php --ignore=*/tests/*,*/vendor/*",
     "test": "phpunit",
-    "genpot": "vendor/websharks/wp-i18n-tools/makepot.php wp-plugin . $(pwd)/languages/wp-github-sync.pot",
-    "post-install-cmd": [
-      "xrstf\\Composer52\\Generator::onPostInstallCmd"
-    ],
-    "post-update-cmd": [
-      "xrstf\\Composer52\\Generator::onPostInstallCmd"
-    ],
-    "post-autoload-dump": [
-      "xrstf\\Composer52\\Generator::onPostInstallCmd"
-    ]
+    "genpot": "vendor/websharks/wp-i18n-tools/makepot.php wp-plugin . $(pwd)/languages/wp-github-sync.pot"
   }
 }
